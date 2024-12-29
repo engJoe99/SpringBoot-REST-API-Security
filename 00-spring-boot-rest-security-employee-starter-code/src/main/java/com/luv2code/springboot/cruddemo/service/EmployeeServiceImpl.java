@@ -11,18 +11,22 @@ import java.util.Optional;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
+    // field injection
     private EmployeeRepository employeeRepository;
 
+    // constructor injection
     @Autowired
     public EmployeeServiceImpl(EmployeeRepository theEmployeeRepository) {
         employeeRepository = theEmployeeRepository;
     }
 
+    // define a method to return all employees
     @Override
     public List<Employee> findAll() {
         return employeeRepository.findAll();
     }
 
+   // define a method to return a single employee
     @Override
     public Employee findById(int theId) {
         Optional<Employee> result = employeeRepository.findById(theId);
@@ -40,11 +44,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         return theEmployee;
     }
 
+
+    // define a method to save an employee
     @Override
     public Employee save(Employee theEmployee) {
         return employeeRepository.save(theEmployee);
     }
 
+
+    // define a method to delete an employee
     @Override
     public void deleteById(int theId) {
         employeeRepository.deleteById(theId);
