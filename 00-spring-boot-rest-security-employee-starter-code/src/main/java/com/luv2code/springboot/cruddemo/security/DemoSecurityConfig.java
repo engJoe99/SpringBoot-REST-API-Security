@@ -23,7 +23,19 @@ public class DemoSecurityConfig {
     // JdbcUserDetailsManager is initialized with the DataSource and loads the users from the database
     @Bean
     public UserDetailsManager userDetailsManager(DataSource dataSource) {
-        return new JdbcUserDetailsManager(dataSource);
+        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
+
+        // define the query to retrieve a user by username
+        // user_id ( ? ) is passed in from the login form
+        jdbcUserDetailsManager.setUsersByUsernameQuery(
+                "select user_id, pw, active from members where user_id=?");
+
+        // define the query to retrieve the authorities/roles by username
+        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery(
+                "select user_id, role from roles where user_id=?");
+
+
+        return jdbcUserDetailsManager;
     }
 
     // define 3 users, each user has a username, each user has a password,
